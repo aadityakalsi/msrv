@@ -65,32 +65,39 @@ const char* find_exe(const char* str)
 
 void get_exe_dir(char* buf, size_t s)
 {
+    char* start = buf;
     strcpy(buf, EXE_NAME);
 #if defined(_WIN32)
     while (*buf) {
         *(buf++) = (*buf == '\\') ? '/' : *buf;
     }
 #endif/*defined(_WIN32)*/
+    {
+        char* lst = strrchr(start, '/');
+        *lst = '\0';
+    }
 }
 
 TEST_FUNC( hleak )
 {
     char curdir[1024];
-    char* lst = NULL;
     get_exe_dir(curdir, 1024);
-    lst = strrchr(curdir,'/');
-    TEST_TRUE( lst );
-    *lst = '\0';
     CHDIR( curdir );
     const char* path = find_exe("hleak");
     TEST_TRUE( path );
-    TEST_TRUE( system(path) != 0 );
+    char cmd[1024];
+    strcpy(cmd, "");
+    strcat(cmd, path);
+    strcat(cmd, " > hleak.out");
+    system(cmd);
+    {
+        FILE* f = fopen("hleak.out", "rb");
+        TEST_FALSE( fgetc(f) == EOF );
+        fclose(f);
+    }
 }
 
 #endif/*defined(NDEBUG)*/
-
-void do_nothing(void* p)
-{ }
 
 TEST_FUNC( alloc_free )
 {

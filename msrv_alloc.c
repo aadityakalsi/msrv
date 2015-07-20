@@ -50,6 +50,7 @@ POSSIBILITY OF SUCH DAMAGE.
  * On Windows, aligned APIs need malloc.h
  */
 #include <malloc.h>
+#include <Windows.h>
 #endif/*defined(_MSC_VER)*/
 
 #define ALIGN 64
@@ -60,7 +61,7 @@ void* msrv_allocate(size_t sz)
     return _aligned_malloc(sz, ALIGN);
 #else
     void* mem = NULL;
-    posix_memalign(&mem, ALIGN, sz);
+    (void)posix_memalign(&mem, ALIGN, sz);
     return mem;
 #endif
 }
@@ -90,7 +91,7 @@ struct malloc_info_t
 static malloc_info* S_HEAD;
 static int          S_REG_EXIT = 0;
 
-void msrv_dumpmem(void)
+int msrv_dumpmem(void)
 {
     malloc_info *mi = S_HEAD;
     int ret = 0;
@@ -98,6 +99,7 @@ void msrv_dumpmem(void)
         if ((int)(mi->size) >= 0) {
             ret = 1;
             printf("MSRV_LEAKED: %s (%4d): %8llu bytes at %p\n", mi->file, mi->line, (unsigned long long)mi->size, mi+1);
+            fflush(stdout);
         }
         mi = mi->next;
     }
@@ -110,10 +112,24 @@ void msrv_dumpmem(void)
         mi = mi->next;
     }
 #endif/*defined(MSRV_DEBUG_MEM_SHOW_ALL)*/
-    if (ret) {
-        exit(ret);
-    }
+    return ret;
 }
+
+#if defined(_MSC_VER)
+
+void msrv_dumpmem_s(void)
+{
+    if (msrv_dumpmem()) { ExitProcess(10); }
+}
+
+#else
+
+void msrv_dumpmem_s(void)
+{
+    if (msrv_dumpmem()) { abort(); }
+}
+
+#endif/*defined(_MSC_VER)*/
 
 void* msrv_allocate_debug(size_t sz, const char* file, int line)
 {
@@ -125,7 +141,7 @@ void* msrv_allocate_debug(size_t sz, const char* file, int line)
     if (S_HEAD) {
         mi->next->prev = mi;
     } else if (!S_REG_EXIT) {
-        atexit(msrv_dumpmem);
+        atexit(msrv_dumpmem_s);
     }
     mi->prev = NULL;
     mi->size = (int)sz;

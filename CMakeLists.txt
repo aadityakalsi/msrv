@@ -57,6 +57,10 @@ add_lib_build_def(msrv "MSRV_LIB_VERSION=\"${MSRV_VERSION}\"")
 link_libs(msrv )
 set_tgt_ver(msrv ${MSRV_VERSION} ${MSRV_VERSION_MAJOR})
 
+if (WIN32)
+add_lib_build_def(msrv "_CONSOLE")
+add_link_flag(msrv "/SUBSYSTEM:CONSOLE")
+endif()
 
 add_hdrs_tgt_ide(public ${PUB_HDR})
 add_hdrs_tgt_ide(internal ${INT_HDR})
