@@ -36,6 +36,10 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef MSRV_MSRV_INTERNAL_H
 #define MSRV_MSRV_INTERNAL_H
 
+#if defined(_WIN32)
+#  define _CRT_SECURE_NO_WARNINGS
+#endif/*defined(_WIN32)*/
+
 /* STDLIB includes
  */
 #include <stdio.h>      /* for fprintf(), stderr */

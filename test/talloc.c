@@ -107,10 +107,28 @@ TEST_FUNC( alloc_free )
     TEST_FALSE( p );
 }
 
+TEST_FUNC( calloc_free )
+{
+    void* p = msrv_calloc(50);
+
+    {/* test calloc */
+        char* mem = p;
+        int i = 0;
+        for (; i != 50; ++i) {
+            TEST_TRUE( mem[i] == 0 );
+        }
+    }
+
+    TEST_TRUE( p );
+    msrv_free(p);
+    TEST_FALSE( p );
+}
+
 void SetupTests(void)
 {
     /* Correctness tests */
     REG_TEST( alloc_free );
+    REG_TEST( calloc_free );
 #if !defined(NDEBUG)
     REG_TEST( hleak );
 #endif/*defined(NDEBUG)*/

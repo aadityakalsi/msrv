@@ -36,6 +36,10 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef MINISERV_MSRV_SYM_H
 #define MINISERV_MSRV_SYM_H
 
+#if defined(_WIN32)
+#  define _CRT_SECURE_NO_WARNINGS
+#endif/*defined(_WIN32)*/
+
 #if defined(MSRV_BUILD)
 #  ifdef _MSC_VER
 #    define MSRV_API __declspec(dllexport)

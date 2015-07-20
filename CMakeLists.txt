@@ -36,14 +36,17 @@ include("cmake/ProjTools.cmake")
 set(PUB_HDR
     msrv_sym.h
     msrv.h;
-    msrv_alloc.h)
+    msrv_alloc.h;
+    msrv_io.h;
+    msrv_log.h)
 
 set(INT_HDR
     msrv_internal.h)
 
 set(LIB_SRC 
     msrv_alloc.c
-    msrv.c)
+    msrv.c;
+    msrv_log.c)
 
 # Lib version
 set(MSRV_VERSION_MAJOR 0.1)

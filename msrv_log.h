@@ -29,82 +29,58 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 
 /**
- * \file msrv_alloc.h
+ * \file msrv_log.h
  * \date 2015
  */
 
-#ifndef MINISERV_MSRV_ALLOC_H
-#define MINISERV_MSRV_ALLOC_H
+#ifndef MSRV_MSRV_LOG_H
+#define MSRV_MSRV_LOG_H
 
 /* PKG includes
  */
 #include <msrv/msrv_sym.h>
+#include <msrv/msrv_io.h>
 
-/* STDLIB includes
+struct msrv_logger_t;
+
+/**
+ *
  */
-#include <stdlib.h>
-#include <string.h>
+typedef struct msrv_logger_t msrv_logger;
 
-#if !defined(NDEBUG)
+#define MSRV_LOG_INFO  3
+#define MSRV_LOG_WARN  2
+#define MSRV_LOG_ERR   1
+#define MSRV_LOG_FATAL 0
 
 MSRV_API
 /**
  *
  */
-void* msrv_allocate_debug(size_t sz, const char* file, int line);
+msrv_logger* msrv_create_logger_filename(const char* file, int loglevel);
 
 MSRV_API
 /**
  *
  */
-void msrv_deallocate_debug(void* mem);
-
-/**
- *
- */
-#  define msrv_alloc(x) msrv_allocate_debug((x), __FILE__, __LINE__)
-
-/**
- *
- */
-#  define msrv_free(x)  { msrv_deallocate_debug((x)); void** pp = &x; *pp = NULL; }
-
-#else/* Release */
+msrv_logger* msrv_create_logger_file(FILE* file, int loglevel);
 
 MSRV_API
 /**
  *
  */
-void* msrv_allocate(size_t sz);
+void msrv_destroy_logger(msrv_logger* log);
 
 MSRV_API
 /**
  *
  */
-void msrv_deallocate(void* mem);
+void msrv_log(msrv_logger* log, int level, const char* fmt, ...);
 
+MSRV_API
 /**
  *
  */
-#  define msrv_alloc(x) msrv_allocate((x))
+void msrv_log_set_level(msrv_logger* log, int level);
 
-/**
- *
- */
-#  define msrv_free(x)  { msrv_deallocate((x)); void** pp = &x; *pp = NULL; }
-
-#endif/*!defined(NDEBUG)*/
-
-MSRV_INL
-/**
- *
- */
-void* msrv_calloc(size_t sz)
-{
-    void* p = msrv_alloc(sz);
-    memset(p, 0, sz);
-    return p;
-}
-
-#endif//MINISERV_MSRV_ALLOC_H
-
+#endif//MSRV_MSRV_LOG_H

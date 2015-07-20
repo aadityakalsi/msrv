@@ -29,82 +29,14 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 
 /**
- * \file msrv_alloc.h
+ * \file msrv_io.h
  * \date 2015
  */
 
-#ifndef MINISERV_MSRV_ALLOC_H
-#define MINISERV_MSRV_ALLOC_H
+#ifndef MSRV_MSRV_IO_H
+#define MSRV_MSRV_IO_H
 
-/* PKG includes
- */
-#include <msrv/msrv_sym.h>
+#include <stdio.h>
 
-/* STDLIB includes
- */
-#include <stdlib.h>
-#include <string.h>
-
-#if !defined(NDEBUG)
-
-MSRV_API
-/**
- *
- */
-void* msrv_allocate_debug(size_t sz, const char* file, int line);
-
-MSRV_API
-/**
- *
- */
-void msrv_deallocate_debug(void* mem);
-
-/**
- *
- */
-#  define msrv_alloc(x) msrv_allocate_debug((x), __FILE__, __LINE__)
-
-/**
- *
- */
-#  define msrv_free(x)  { msrv_deallocate_debug((x)); void** pp = &x; *pp = NULL; }
-
-#else/* Release */
-
-MSRV_API
-/**
- *
- */
-void* msrv_allocate(size_t sz);
-
-MSRV_API
-/**
- *
- */
-void msrv_deallocate(void* mem);
-
-/**
- *
- */
-#  define msrv_alloc(x) msrv_allocate((x))
-
-/**
- *
- */
-#  define msrv_free(x)  { msrv_deallocate((x)); void** pp = &x; *pp = NULL; }
-
-#endif/*!defined(NDEBUG)*/
-
-MSRV_INL
-/**
- *
- */
-void* msrv_calloc(size_t sz)
-{
-    void* p = msrv_alloc(sz);
-    memset(p, 0, sz);
-    return p;
-}
-
-#endif//MINISERV_MSRV_ALLOC_H
+#endif//MSRV_MSRV_IO_H
 

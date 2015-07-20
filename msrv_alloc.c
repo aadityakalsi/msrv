@@ -91,6 +91,7 @@ struct malloc_info_t
 static malloc_info* S_HEAD;
 static int          S_REG_EXIT = 0;
 
+MSRV_PRV
 int msrv_dumpmem(void)
 {
     malloc_info *mi = S_HEAD;
