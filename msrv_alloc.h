@@ -38,7 +38,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 /* STDLIB includes
  */
-#include <stdlib.h> /* for malloc(), free() */
+#include <stdlib.h>
 
 /* PKG includes
  */

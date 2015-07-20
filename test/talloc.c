@@ -33,11 +33,11 @@ static char FIND_EXE_BUFF[500];
 
 void put_name(const char* pre, const char* name)
 {
-    strcpy(FIND_EXE_BUFF, "");
-    strcat(FIND_EXE_BUFF, "../");
-    strcat(FIND_EXE_BUFF, str);
+    strcpy((char*)FIND_EXE_BUFF, "");
+    strcat((char*)FIND_EXE_BUFF, "../");
+    strcat((char*)FIND_EXE_BUFF, name);
 #if defined(_WIN32)
-    strcat(FIND_EXE_BUFF, ".exe");
+    strcat((char*)FIND_EXE_BUFF, ".exe");
 #endif/*defined(_WIN32)*/
 }
 

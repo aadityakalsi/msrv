@@ -33,6 +33,10 @@ POSSIBILITY OF SUCH DAMAGE.
  * \date 2015
  */
 
+#if !defined(_MSC_VER)
+#define _XOPEN_SOURCE 600
+#endif/*!defined(_MSC_VER)*/
+
 /* PKG includes
  */
 #include <msrv/msrv_alloc.h>
