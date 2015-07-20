@@ -39,5 +39,5 @@ int main(int argc, const char* argv[])
 {
     void* p = msrv_alloc(50);
     /* leak it */
-    (void)p;
+    p = NULL;
 }
