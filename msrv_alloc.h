@@ -67,7 +67,7 @@ void msrv_deallocate_debug(void* mem);
 /**
  *
  */
-#  define msrv_free(x)  { msrv_deallocate_debug((x)); void** pp = &x; *pp = NULL; }
+#  define msrv_free(x)  { msrv_deallocate_debug((x)); void** pp = &(void*)(x); *pp = NULL; }
 
 #else/* Release */
 
@@ -91,7 +91,7 @@ void msrv_deallocate(void* mem);
 /**
  *
  */
-#  define msrv_free(x)  { msrv_deallocate((x)); void** pp = &x; *pp = NULL; }
+#  define msrv_free(x)  { msrv_deallocate((x)); void** pp = &(void*)(x); *pp = NULL; }
 
 #endif/*!defined(NDEBUG)*/
 
