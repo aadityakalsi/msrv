@@ -3,7 +3,7 @@
 cmake_minimum_required (VERSION 2.8)
 
 # -- Set project name
-set(PROJ_NAME miniserv)
+set(PROJ_NAME msrv)
 
 project (${PROJ_NAME})
 
@@ -34,11 +34,12 @@ include("cmake/ProjTools.cmake")
 
 # -- Add the library target
 set(PUB_HDR
+    msrv_sym.h
     msrv.h;
     msrv_alloc.h)
 
 set(INT_HDR
-    )
+    msrv_internal.h)
 
 set(LIB_SRC 
     msrv_alloc.c
@@ -57,9 +58,18 @@ link_libs(msrv )
 set_tgt_ver(msrv ${MSRV_VERSION} ${MSRV_VERSION_MAJOR})
 
 
+add_hdrs_tgt_ide(public ${PUB_HDR})
+add_hdrs_tgt_ide(internal ${INT_HDR})
+add_hdrs_tgt_ide(all ${PUB_HDR} ${INT_HDR})
+
+# -- Install targets
+install_hdr(${PUB_HDR})
+install_tgt(msrv)
+# install(FILES README.md DESTINATION .)
+
 #######################################
 # -- Add the subdirectories
-set(PROJ_SUBDIRS  unittest; doc; tools)
+set(PROJ_SUBDIRS  unittest; doc; tools; test)
 
 # add all subdirs
 foreach(subdir ${PROJ_SUBDIRS})

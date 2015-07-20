@@ -36,5 +36,13 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef MINISERV_MSRV_H
 #define MINISERV_MSRV_H
 
+#include <msrv/msrv_sym.h>
+
+MSRV_API
+/**
+ * Return current version as string.
+ */
+const char* msrv_version();
+
 #endif//MINISERV_MSRV_H
 

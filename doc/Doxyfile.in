@@ -1,7 +1,7 @@
 # Doxyfile
 
 PROJECT_NAME             = @PROJ_NAME@
-OPTIMIZE_OUTPUT_FOR_C    = NO
+OPTIMIZE_OUTPUT_FOR_C    = YES
 
 INPUT =  @CMAKE_SOURCE_DIR@ \
          @CMAKE_SOURCE_DIR@/doc

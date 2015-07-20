@@ -29,13 +29,42 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 
 /**
- * \file msrv.c
+ * \file msrv_internal.h
  * \date 2015
  */
 
-#include <msrv/msrv.h>
+#ifndef MSRV_MSRV_INTERNAL_H
+#define MSRV_MSRV_INTERNAL_H
 
-const char* msrv_version()
-{
-    return MSRV_LIB_VERSION;
-}
+/* STDLIB includes
+ */
+#include <stdio.h>      /* for fprintf(), stderr */
+#include <stdlib.h>     /* for abort() */
+
+/* PKG includes
+ */
+#include <msrv/msrv_sym.h>  /* for MSRV_DEBUG */
+
+#define MSRV_ASSERT_ALWAYS_MSG(x, ...) \
+  do { \
+      if (!(x)) { \
+          fprintf(stderr, "[MSRV ASSERT] file: %s  line: %d message: ", __FILE__, __LINE__); \
+          fprintf(stderr, __VA_ARGS__); \
+          abort(); \
+      } \
+  } while(0)
+
+#if MSRV_DEBUG
+#  define MSRV_ASSERT_MSG(x, ...) MSRV_ASSERT_ALWAYS_MSG(x, __VA_ARGS__)
+#else/*no debugging*/
+#  define MSRV_ASSERT_MSG(x, ...)
+#endif/*MSRV_DEBUG*/
+
+#if MSRV_DEBUG
+#  define MSRV_ASSERT(x) MSRV_ASSERT_ALWAYS_MSG(x, "expression: %s\n", #x)
+#else/*no debugging*/
+#  define MSRV_ASSERT(x)
+#endif/*MSRV_DEBUG*/
+
+#endif//MSRV_MSRV_INTERNAL_H
+

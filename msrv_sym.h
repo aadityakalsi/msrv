@@ -29,13 +29,44 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 
 /**
- * \file msrv.c
+ * \file msrv_sym.h
  * \date 2015
  */
 
-#include <msrv/msrv.h>
+#ifndef MINISERV_MSRV_SYM_H
+#define MINISERV_MSRV_SYM_H
 
-const char* msrv_version()
-{
-    return MSRV_LIB_VERSION;
-}
+#if defined(MSRV_BUILD)
+#  ifdef _MSC_VER
+#    define MSRV_API __declspec(dllexport)
+#  else
+#    define MSRV_API __attribute__((__visibility__("default")))
+#  endif
+#else
+#  ifdef _MSC_VER
+#    define MSRV_API __declspec(dllimport)
+#  else
+#    define MSRV_API
+#  endif
+#endif
+
+#if !defined(MSRV_INL)
+#  if defined(_MSC_VER)
+#    define MSRV_INL __forceinline
+#  else/*GCC like compiler*/
+#    define MSRV_INL __inline__ __attribute__((always_inline))
+#  endif/*defined(_MSC_VER)*/
+#endif/*defined(MSRV_INL)*/
+
+#if !defined(MSRV_PRV)
+#  define MSRV_PRV static
+#endif/*defined(MSRV_PRV)*/
+
+#if !defined(MSRV_DEBUG) && !defined(NDEBUG)
+#  define MSRV_DEBUG 1
+#else
+#  define MSRV_DEBUG 0
+#endif/*defined(MSRV_DEBUG)*/
+
+#endif//MINISERV_MSRV_SYM_H
+

@@ -29,13 +29,15 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 
 /**
- * \file msrv.c
+ * \file hleak.c
  * \date 2015
  */
 
-#include <msrv/msrv.h>
+#include <msrv/msrv_alloc.h>
 
-const char* msrv_version()
+int main(int argc, const char* argv[])
 {
-    return MSRV_LIB_VERSION;
+    void* p = msrv_alloc(50);
+    /* leak it */
+    (void)p;
 }

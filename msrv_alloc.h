@@ -36,5 +36,49 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef MINISERV_MSRV_ALLOC_H
 #define MINISERV_MSRV_ALLOC_H
 
+/* STDLIB includes
+ */
+#include <stdlib.h> /* for malloc(), free() */
+
+/* PKG includes
+ */
+#include <msrv/msrv_sym.h>
+
+#if !defined(NDEBUG)
+
+MSRV_API
+/**
+ *
+ */
+void* msrv_allocate_debug(size_t sz, const char* file, int line);
+
+MSRV_API
+/**
+ *
+ */
+void msrv_deallocate_debug(void* mem);
+
+#  define msrv_alloc(x) msrv_allocate_debug((x), __FILE__, __LINE__)
+#  define msrv_free(x)  { msrv_deallocate_debug((x)); void** pp = &x; *pp = NULL; }
+
+#else/* Release */
+
+#  define msrv_alloc(x) msrv_allocate((x))
+#  define msrv_free(x)  msrv_deallocate((x))
+
+#endif/*!defined(NDEBUG)*/
+
+MSRV_API
+/**
+ *
+ */
+void* msrv_allocate(size_t sz);
+
+MSRV_API
+/**
+ *
+ */
+void msrv_deallocate(void* mem);
+
 #endif//MINISERV_MSRV_ALLOC_H
 
