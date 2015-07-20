@@ -3,11 +3,12 @@
  * \date 2015
  */
 
-#include "unittest.h"
-
 #if defined(_WIN32)
 #define _CRT_SECURE_NO_WARNINGS
 #endif/*defined(_WIN32)*/
+
+#include "unittest.h"
+
 
 /* STDLIB includes
  */
