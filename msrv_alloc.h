@@ -64,7 +64,7 @@ void msrv_deallocate_debug(void* mem);
 #else/* Release */
 
 #  define msrv_alloc(x) msrv_allocate((x))
-#  define msrv_free(x)  msrv_deallocate((x))
+#  define msrv_free(x)  { msrv_deallocate((x)); void** pp = &x; *pp = NULL; }
 
 #endif/*!defined(NDEBUG)*/
 

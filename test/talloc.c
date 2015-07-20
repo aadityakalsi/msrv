@@ -49,8 +49,13 @@ void put_name(const char* pre, const char* name)
 
 const char* find_exe(const char* str)
 {
+#if defined(_WIN32)
+    put_name("", str);
+    if (exists(FIND_EXE_BUFF)) { return FIND_EXE_BUFF; }
+#else/*UNIX*/
     put_name("./", str);
     if (exists(FIND_EXE_BUFF)) { return FIND_EXE_BUFF; }
+#endif/*defined(_WIN32)*/
     put_name("../", str);
     if (exists(FIND_EXE_BUFF)) { return FIND_EXE_BUFF; }
     put_name("../../", str);
@@ -83,6 +88,9 @@ TEST_FUNC( hleak )
 }
 
 #endif/*defined(NDEBUG)*/
+
+void do_nothing(void* p)
+{ }
 
 TEST_FUNC( alloc_free )
 {

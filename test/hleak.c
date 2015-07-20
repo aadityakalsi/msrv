@@ -35,9 +35,12 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include <msrv/msrv_alloc.h>
 
+void do_nothing(void* p)
+{ }
+
 int main(int argc, const char* argv[])
 {
     void* p = msrv_alloc(50);
     /* leak it */
-    p = NULL;
+    do_nothing(p);
 }
