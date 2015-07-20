@@ -34,7 +34,7 @@ static char FIND_EXE_BUFF[500];
 void put_name(const char* pre, const char* name)
 {
     strcpy((char*)FIND_EXE_BUFF, "");
-    strcat((char*)FIND_EXE_BUFF, "../");
+    strcat((char*)FIND_EXE_BUFF, pre);
     strcat((char*)FIND_EXE_BUFF, name);
 #if defined(_WIN32)
     strcat((char*)FIND_EXE_BUFF, ".exe");
@@ -43,11 +43,14 @@ void put_name(const char* pre, const char* name)
 
 const char* find_exe(const char* str)
 {
-    if (exists(str)) { return str; }
+    put_name("", str);
+    if (exists(FIND_EXE_BUFF)) { return FIND_EXE_BUFF; }
     put_name("./", str);
     if (exists(FIND_EXE_BUFF)) { return FIND_EXE_BUFF; }
     put_name("../", str);
-    if (exists(FIND_EXE_BUFF)) { return FIND_EXE_BUFF; }   
+    if (exists(FIND_EXE_BUFF)) { return FIND_EXE_BUFF; }
+    put_name("../../", str);
+    if (exists(FIND_EXE_BUFF)) { return FIND_EXE_BUFF; }
     return NULL;
 }
 
