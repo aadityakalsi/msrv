@@ -5,12 +5,10 @@
 
 #if defined(_WIN32)
 #  define _CRT_SECURE_NO_WARNINGS
-#  define GETCWD _getcwd
 #  define CHDIR  _chdir
 #include <direct.h>
 #else
 #  define _XOPEN_SOURCE 600
-#  define GETCWD getcwd
 #  define CHDIR  chdir
 #include <unistd.h>
 #endif/*defined(_WIN32)*/
@@ -78,7 +76,7 @@ TEST_FUNC( hleak )
     lst = strrchr(curdir,'/');
     TEST_TRUE( lst );
     *lst = '\0';
-    chdir( curdir );
+    CHDIR( curdir );
     const char* path = find_exe("hleak");
     TEST_TRUE( path );
     TEST_TRUE( system(path) != 0 );
