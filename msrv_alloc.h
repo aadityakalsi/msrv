@@ -59,6 +59,12 @@ MSRV_API
  */
 void msrv_deallocate_debug(void* mem);
 
+MSRV_API
+/**
+ *
+ */
+void* msrv_callocate_debug(size_t sz, const char* file, int line);
+
 /**
  *
  */
@@ -67,7 +73,12 @@ void msrv_deallocate_debug(void* mem);
 /**
  *
  */
-#  define msrv_free(x)  { msrv_deallocate_debug((x)); void** pp = &(void*)(x); *pp = NULL; }
+#  define msrv_calloc(x) msrv_callocate_debug((x), __FILE__, __LINE__)
+
+/**
+ *
+ */
+#  define msrv_free(x)  msrv_deallocate_debug((x))
 
 #else/* Release */
 
@@ -83,6 +94,12 @@ MSRV_API
  */
 void msrv_deallocate(void* mem);
 
+MSRV_API
+/**
+ *
+ */
+void* msrv_callocate(size_t sz);
+
 /**
  *
  */
@@ -91,20 +108,9 @@ void msrv_deallocate(void* mem);
 /**
  *
  */
-#  define msrv_free(x)  { msrv_deallocate((x)); void** pp = &(void*)(x); *pp = NULL; }
+#  define msrv_free(x)  msrv_deallocate((x))
 
 #endif/*!defined(NDEBUG)*/
-
-MSRV_INL
-/**
- *
- */
-void* msrv_calloc(size_t sz)
-{
-    void* p = msrv_alloc(sz);
-    memset(p, 0, sz);
-    return p;
-}
 
 #endif//MINISERV_MSRV_ALLOC_H
 

@@ -75,6 +75,13 @@ void msrv_deallocate(void* mem)
 #endif
 }
 
+void* msrv_callocate(size_t sz)
+{
+    void* p = msrv_allocate(sz);
+    memset(p, 0, sz);
+    return p;
+}
+
 #if MSRV_DEBUG
 
 typedef struct malloc_info_t malloc_info;
@@ -116,25 +123,14 @@ int msrv_dumpmem(void)
     return ret;
 }
 
-#if defined(_MSC_VER)
-
 void msrv_dumpmem_s(void)
 {
-    if (msrv_dumpmem()) { ExitProcess(10); }
+    if (msrv_dumpmem()) { exit(1); }
 }
-
-#else
-
-void msrv_dumpmem_s(void)
-{
-    if (msrv_dumpmem()) { abort(); }
-}
-
-#endif/*defined(_MSC_VER)*/
 
 void* msrv_allocate_debug(size_t sz, const char* file, int line)
 {
-    malloc_info *mi = (malloc_info*)malloc(sz + sizeof(*mi));
+    malloc_info *mi = (malloc_info*)msrv_allocate(sz + sizeof(*mi));
     if (mi == NULL) return mi;
     mi->file = file;
     mi->line = line;
@@ -167,6 +163,13 @@ void msrv_deallocate_debug(void *ptr)
         }
 #endif/*!defined(MSRV_DEBUG_MEM_SHOW_ALL)*/
    }
+}
+
+void* msrv_callocate_debug(size_t sz, const char* file, int line)
+{
+    void* p = msrv_allocate_debug(sz, file, line);
+    memset(p, 0, sz);
+    return p;
 }
 
 #endif/*MSRV_DEBUG*/

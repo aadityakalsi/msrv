@@ -104,7 +104,6 @@ TEST_FUNC( alloc_free )
     void* p = msrv_alloc(50);
     TEST_TRUE( p );
     msrv_free(p);
-    TEST_FALSE( p );
 }
 
 TEST_FUNC( calloc_free )
@@ -121,7 +120,6 @@ TEST_FUNC( calloc_free )
 
     TEST_TRUE( p );
     msrv_free(p);
-    TEST_FALSE( p );
 }
 
 void SetupTests(void)
