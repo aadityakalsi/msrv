@@ -2,10 +2,10 @@
 branches:
   # whitelist
   only:
-    - master
+    - develop
 
 environment:
-  PROJ: "c:/projects/miniserv"
+  PROJ: "c:/projects/msrv"
 
 platform:
   - x86
@@ -16,7 +16,7 @@ configuration:
 
 build:
   # path to Visual Studio solution or project
-  project: c:/projects/miniserv/build/check_on_install.vcxproj
+  project: c:/projects/msrv/build/check_on_install.vcxproj
 
 # scripts to run before build
 before_build:
