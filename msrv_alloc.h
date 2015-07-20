@@ -108,6 +108,11 @@ void* msrv_callocate(size_t sz);
 /**
  *
  */
+#  define msrv_calloc(x) msrv_callocate((x))
+
+/**
+ *
+ */
 #  define msrv_free(x)  msrv_deallocate((x))
 
 #endif/*!defined(NDEBUG)*/
