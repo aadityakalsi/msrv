@@ -5,6 +5,10 @@
 
 #include "unittest.h"
 
+#if defined(_WIN32)
+#define _CRT_SECURE_NO_WARNINGS
+#endif/*defined(_WIN32)*/
+
 /* STDLIB includes
  */
 #include <stdlib.h>
