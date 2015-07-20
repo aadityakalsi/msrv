@@ -9,6 +9,8 @@
 
 #include "unittest.h"
 
+#include <string.h>
+
 const char* exedir()
 {
     static char EXEDIR[1024];
