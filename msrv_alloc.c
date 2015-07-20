@@ -61,7 +61,8 @@ void* msrv_allocate(size_t sz)
     return _aligned_malloc(sz, ALIGN);
 #else
     void* mem = NULL;
-    (void)posix_memalign(&mem, ALIGN, sz);
+    int ret = posix_memalign(&mem, ALIGN, sz);
+    (void)ret;
     return mem;
 #endif
 }
