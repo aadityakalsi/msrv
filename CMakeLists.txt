@@ -38,7 +38,16 @@ set(PUB_HDR
     msrv.h;
     msrv_alloc.h;
     msrv_io.h;
-    msrv_log.h)
+    msrv_log.h;
+    msrv_inttypes.h;
+    msrv_stdint.h)
+
+# Platform specific headers
+if (WIN32)
+  list(APPEND PUB_HDR msrv_inttypes_win.h)
+else()#UNIX
+  list(APPEND PUB_HDR msrv_inttypes_unix.h)
+endif(WIN32)
 
 set(INT_HDR
     msrv_internal.h)

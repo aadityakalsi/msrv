@@ -4,6 +4,10 @@ add_test_exe    (tversion tversion.c)
 test_link_libs  (tversion msrv)
 create_test     (tversion)
 
+add_test_exe    (tinthdrs tinthdrs.c)
+test_link_libs  (tinthdrs )
+create_test     (tinthdrs)
+
 add_exe         (hleak hleak.c)
 link_libs       (hleak msrv)
 install_tgt     (hleak)
