@@ -41,7 +41,8 @@
 #pragma once
 #endif
 
-#include "stdint.h"
+// <msrv/msrv_stdint.h> already included
+//#include "stdint.h"
 
 // 7.8 Format conversion of integer types
 
