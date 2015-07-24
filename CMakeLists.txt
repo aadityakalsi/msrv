@@ -70,8 +70,8 @@ link_libs(msrv )
 set_tgt_ver(msrv ${MSRV_VERSION} ${MSRV_VERSION_MAJOR})
 
 if (WIN32)
-add_lib_build_def(msrv "_CONSOLE")
-add_link_flag(msrv "/SUBSYSTEM:CONSOLE")
+  add_lib_build_def(msrv "_CONSOLE")
+  add_link_flag(msrv "/SUBSYSTEM:CONSOLE")
 endif()
 
 add_hdrs_tgt_ide(public ${PUB_HDR})
