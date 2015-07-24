@@ -184,6 +184,11 @@
  *
  */
 
+#if defined(_MSC_VER)
+#pragma warning(disable:4142)
+#pragma warning(disable:4005)
+#endif/*defined(_MSC_VER)*/
+
 #include <stddef.h>
 #include <limits.h>
 #include <signal.h>
@@ -811,3 +816,8 @@ int main () {
 }
 
 #endif
+
+#if defined(_MSC_VER)
+#pragma warning(default:4005)
+#pragma warning(default:4142)
+#endif/*defined(_MSC_VER)*/
